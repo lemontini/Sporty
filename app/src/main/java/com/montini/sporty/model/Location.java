@@ -1,22 +1,40 @@
 package com.montini.sporty.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+@Entity(tableName = "locations_table")
 public class Location implements Parcelable {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
     private String name;
     private String address;
     private int maxCourts;
     private Uri logo;
 
+    // Constructors
+
     public Location() {}
 
+    @Ignore // for Room persistence
     public Location(String name, String address, int maxCourts, Uri logo) {
         this.name = name;
         this.address = address;
         this.maxCourts = maxCourts;
         this.logo = logo;
+    }
+
+    // Getters and Setters
+
+    public int getId() { return id; }
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() { return name; }
