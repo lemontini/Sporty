@@ -39,7 +39,6 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
     public final int LOCATION_EDIT = 02;
 
     // vars
-    // private List<Location> locations;
     private LocationsViewModel mViewModel;
     private LocationsAdapter locationsAdapter;
     View v;
@@ -55,9 +54,26 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
                              @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: started.");
         v = inflater.inflate(R.layout.locations_fragment, container, false);
-        // if (locations == null) locations = new ArrayList<>();
-        initData();
+        initLocationsView();
         return v;
+    }
+
+    private void initLocationsView() {
+        Log.d(TAG, "initLocationsView: init LocationsView.");
+        RecyclerView recyclerView = v.findViewById(R.id.recycler_view);
+        // locationsAdapter = new LocationsAdapter(v.getContext(), locations, this);
+        locationsAdapter = new LocationsAdapter(v.getContext(), this);
+        recyclerView.setAdapter(locationsAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+
+        btnAdd = getActivity().findViewById(R.id.buttonAdd);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), AddLocationActivity.class);
+                startActivityForResult(intent, LOCATION_ADD);
+            }
+        });
     }
 
     @Override
@@ -74,50 +90,30 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
         });
     }
 
-    private void initData() {
-        Log.d(TAG, "initData: preparing data.");
-
-        // locations.add(new Location("SEB arena", "Ąžuolyno g. 7, Vilnius", 4, getUriForResource(R.drawable.logo_seb_arena)));
-        // locations.add(new Location("Delfi Sporto Centras", "Ozo g. 14C, Vilnius", 8, getUriForResource(R.drawable.logo_delfi_sporto_centras)));
-        // locations.add(new Location("Zambia", "Africa", 1, Uri.parse("https://d2lo9qrcc42lm4.cloudfront.net/Images/News/_contentLarge/Main-girls-out-of-school.jpg?mtime=20170426205135")));
-        // locations.add(new Location("a", "b", 1, Uri.parse("file:///storage/emulated/0/Pictures/Instagram/IMG_20190630_210003_297.jpg")));
-
-        initLocationsView();
-
-        btnAdd = getActivity().findViewById(R.id.buttonAdd);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), AddLocationActivity.class);
-                startActivityForResult(intent, LOCATION_ADD);
-            }
-        });
-
-    }
-
-    private void initLocationsView() {
-        Log.d(TAG, "initLocationsView: init LocationsView.");
-        RecyclerView recyclerView = v.findViewById(R.id.recycler_view);
-        // locationsAdapter = new LocationsAdapter(v.getContext(), locations, this);
-        locationsAdapter = new LocationsAdapter(v.getContext(), this);
-        recyclerView.setAdapter(locationsAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
-    }
-
     @Override
     public void onLocationClick(int position) {
-        Log.d(TAG, "onLocationClick: clicked: " + position);
+        Log.d(TAG, "onLocationClick: clicked at " + position);
         // // locations.get(position);
         Intent intent = new Intent(v.getContext(), AddLocationActivity.class);
         // TODO: only the position should be transferred to the Add activity, as there is no
         //  locations data holder anymore in the View.
         //  Parcelable interface also might not be needed anymore
-        // intent.putExtra("location", (Parcelable) locations.get(position));
+        intent.putExtra("location", (Parcelable) locationsAdapter.getLocationAt(position));
         intent.putExtra("position", position);
         // TODO: relocate the following to other part of the app:
         //  business logic shouldn't be in the View
         // Log.d(TAG, "onLocationClick: before parcelable: " + locations.get(position).getLogo());
         startActivityForResult(intent, LOCATION_EDIT);
+    }
+
+    @Override
+    public void onLocationLongClick(int position) {
+        Log.d(TAG, "onLocationLongClick: clicked at " + position);
+        // Intent intent = new Intent(v.getContext(), AddLocationActivity.class);
+        // intent.putExtra("position", position);
+        // startActivityForResult(intent, LOCATION_EDIT);
+        mViewModel.delete(locationsAdapter.getLocationAt(position));
+        Toast.makeText(getContext(), "Location deleted", Toast.LENGTH_SHORT).show();
     }
 
     @Override

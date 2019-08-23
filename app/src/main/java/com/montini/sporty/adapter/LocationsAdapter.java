@@ -31,11 +31,6 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
     private OnLocationListener onLocationListener;
 
     // constructor
-    // public LocationsAdapter(Context context, List<Location> locations, OnLocationListener onLocationListener) {
-    //     this.context = context;
-    //     this.locations = locations;
-    //     this.onLocationListener = onLocationListener;
-    // }
     public LocationsAdapter(Context context, OnLocationListener onLocationListener) {
         this.context = context;
         this.onLocationListener = onLocationListener;
@@ -72,10 +67,9 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
         return locations.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         ImageView aLogo;
         TextView aName, aAddress;
-        LinearLayout aItem;
         OnLocationListener onLocationListener;
 
         public ViewHolder(@NonNull View itemView, OnLocationListener onLocationListener) {
@@ -84,24 +78,36 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
             this.aLogo = itemView.findViewById(R.id.vLogo);
             this.aName = itemView.findViewById(R.id.vName);
             this.aAddress = itemView.findViewById(R.id.vAddress);
-            this.aItem = itemView.findViewById(R.id.list_line);
             this.onLocationListener = onLocationListener;
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             onLocationListener.onLocationClick(getAdapterPosition());
         }
+
+        @Override
+        public boolean onLongClick(View view) {
+            onLocationListener.onLocationLongClick(getAdapterPosition());
+            return true;
+        }
     }
 
     public void setLocations(List<Location> locations) {
         this.locations = locations;
+        for (Location i : locations) Log.d(TAG, "setLocations TAG: " + i.getId());
         notifyDataSetChanged();
+    }
+
+    public Location getLocationAt(int position) {
+        return locations.get(position);
     }
 
     public interface OnLocationListener {
         void onLocationClick(int position);
+        void onLocationLongClick(int position);
     }
 }
