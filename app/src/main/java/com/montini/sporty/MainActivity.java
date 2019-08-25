@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView navMain;
     ViewPager viewPager;
     Toolbar toolbar;
+    // Button btnAdd;
 
     private TextView mTextMessage;
 
@@ -73,7 +75,10 @@ public class MainActivity extends AppCompatActivity {
         SetupFragmentManager(getSupportFragmentManager(), viewPager); // setup Fragment
 
         viewPager.setCurrentItem(0); // set current item when activity start
-        viewPager.addOnPageChangeListener(new PageChange()); // listeners for Viewpager when page changed TODO: Ask Yohan how will this Listener react in case of Pause/Resume (maybe removeOnPageChangeListener() should be used?)
+        viewPager.addOnPageChangeListener(new PageChange()); // listeners for Viewpager when page changed
+
+        // btnAdd = findViewById(R.id.buttonAdd);
+        // btnAdd.setVisibility(View.VISIBLE);
 
     }
 
@@ -81,9 +86,9 @@ public class MainActivity extends AppCompatActivity {
         FragmentAdapter Adapter = new FragmentAdapter(fragmentManager);
 
         //Add All Fragment To List
-        Adapter.add(new EventsFragment(), "Page One");
-        Adapter.add(new LocationsFragment(), "Page Two");
-        Adapter.add(new PlayersFragment(), "Page Three");
+        Adapter.add(new EventsFragment(), "Events");
+        Adapter.add(new LocationsFragment(), "Locations");
+        Adapter.add(new PlayersFragment(), "Players");
         viewPager.setAdapter(Adapter);
     }
 
@@ -115,5 +120,12 @@ public class MainActivity extends AppCompatActivity {
     public static Uri getUriForResource(int resourceId) {
         return Uri.parse("android.resource://" + R.class.getPackage().getName() + "/" + resourceId);
     }
+
+    // public void toggleButtonVisibility(boolean show) {
+    //     if (show) {
+    //         btnAdd.setVisibility(View.VISIBLE);
+    //     }
+    //     else btnAdd.setVisibility(View.GONE);
+    // }
 
 }

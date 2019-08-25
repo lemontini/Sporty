@@ -20,9 +20,9 @@ public class Location implements Parcelable {
 
     // Constructors
 
+    @Ignore // for Room persistence
     public Location() {}
 
-    @Ignore // for Room persistence
     public Location(String name, String address, int maxCourts, Uri logo) {
         this.name = name;
         this.address = address;
@@ -31,7 +31,6 @@ public class Location implements Parcelable {
     }
 
     // Getters and Setters
-
     public int getId() { return id; }
     public void setId(int id) {
         this.id = id;
@@ -52,6 +51,7 @@ public class Location implements Parcelable {
     // Implementation of Parcelable interface
 
     protected Location(Parcel in) {
+        id = in.readInt();
         name = in.readString();
         address = in.readString();
         maxCourts = in.readInt();
@@ -77,6 +77,7 @@ public class Location implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
         parcel.writeString(name);
         parcel.writeString(address);
         parcel.writeInt(maxCourts);

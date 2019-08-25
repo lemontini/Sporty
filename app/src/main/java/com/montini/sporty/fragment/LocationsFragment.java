@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,9 +60,8 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
     }
 
     private void initLocationsView() {
-        Log.d(TAG, "initLocationsView: init LocationsView.");
+        Log.d(TAG, "initLocationsView: init");
         RecyclerView recyclerView = v.findViewById(R.id.recycler_view);
-        // locationsAdapter = new LocationsAdapter(v.getContext(), locations, this);
         locationsAdapter = new LocationsAdapter(v.getContext(), this);
         recyclerView.setAdapter(locationsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
@@ -81,7 +81,7 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(LocationsViewModel.class);
 
-        // TODO: Use the ViewModel
+        // Use the ViewModel
         mViewModel.getAllLocations().observe(this, new Observer<List<Location>>() {
             @Override
             public void onChanged(@Nullable List<Location> locations) {
@@ -93,7 +93,6 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
     @Override
     public void onLocationClick(int position) {
         Log.d(TAG, "onLocationClick: clicked at " + position);
-        // // locations.get(position);
         Intent intent = new Intent(v.getContext(), AddLocationActivity.class);
         // TODO: only the position should be transferred to the Add activity, as there is no
         //  locations data holder anymore in the View.
@@ -137,5 +136,15 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
             locationsAdapter.notifyDataSetChanged(); // is this still necessary when we have implemented the observer?
         }
     }
+
+    // @Override
+    // public void setMenuVisibility(final boolean visible) {
+    //     super.setMenuVisibility(visible);
+    //     Log.d(TAG, "setMenuVisibility: VISIBLE");
+    //     Fragment myFragment = getActivity().getFragmentManager().findFragmentByTag("Locations");
+    //     if (myFragment != null && myFragment.isVisible()) {
+    //         Log.d(TAG, "setMenuVisibility: VISIBLE");
+    //     }
+    // }
 
 }

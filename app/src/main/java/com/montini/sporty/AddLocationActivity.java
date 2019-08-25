@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,7 +56,6 @@ public class AddLocationActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.buttonSave);
 
         Intent intent = getIntent();
-        // Log.d(TAG, "onCreate: has parcel? " + intent.hasExtra("location"));
         cLocation = intent.getParcelableExtra("location");
         position = intent.getIntExtra("position", -1);
 

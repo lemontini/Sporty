@@ -23,7 +23,8 @@
             android:layout_gravity="end"
             android:text="@string/add"
             tools:layout_editor_absoluteX="322dp"
-            tools:layout_editor_absoluteY="0dp" />
+            tools:layout_editor_absoluteY="0dp"
+            android:visibility="gone"/>
 
     </android.support.v7.widget.Toolbar>
 
