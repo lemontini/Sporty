@@ -3,16 +3,19 @@ package com.montini.sporty;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.montini.sporty.adapter.FragmentAdapter;
 import com.montini.sporty.fragment.EventsFragment;
@@ -23,12 +26,14 @@ public class MainActivity extends AppCompatActivity {
 
     // constants
     private static final String TAG = "MainActivity";
+    public final int LOCATION_ADD = 01;
 
     //vars
     BottomNavigationView navMain;
     ViewPager viewPager;
     Toolbar toolbar;
-    // Button btnAdd;
+    Button btnAdd;
+    int currentSelectedTab = 0;
 
     private TextView mTextMessage;
 
@@ -39,19 +44,22 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_events:
-                    viewPager.setCurrentItem(0);
+                    currentSelectedTab = 0;
                     // mTextMessage.setText(R.string.title_events);
-                    return true;
+                    break;
                 case R.id.navigation_locations:
-                    viewPager.setCurrentItem(1);
+                    currentSelectedTab = 1;
                     // mTextMessage.setText(R.string.title_locations);
-                    return true;
+                    break;
                 case R.id.navigation_players:
-                    viewPager.setCurrentItem(2);
+                    currentSelectedTab = 2;
                     // mTextMessage.setText(R.string.title_players);
-                    return true;
+                    break;
+                default:
+                    return false;
             }
-            return false;
+            viewPager.setCurrentItem(currentSelectedTab);
+            return true;
         }
     };
 
@@ -77,9 +85,34 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(0); // set current item when activity start
         viewPager.addOnPageChangeListener(new PageChange()); // listeners for Viewpager when page changed
 
-        // btnAdd = findViewById(R.id.buttonAdd);
-        // btnAdd.setVisibility(View.VISIBLE);
-
+        btnAdd = findViewById(R.id.buttonAdd);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Intent intent = new Intent(v.getContext().getApplicationContext(), AddLocationActivity.class);
+                // startActivityForResult(intent, LOCATION_ADD);
+                Fragment currentPage = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.container + ":" + viewPager.getCurrentItem());
+                if (v.getId() == R.id.buttonAdd) {
+                    switch (currentSelectedTab) {
+                        case 0: {
+                            Log.d(TAG, "onClick: Add Event");
+                            ((EventsFragment) currentPage).addItem();
+                            break;
+                        }
+                        case 1: {
+                            Log.d(TAG, "onClick: Add Location");
+                            ((LocationsFragment) currentPage).addItem();
+                            break;
+                        }
+                        case 2: {
+                            Log.d(TAG, "onClick: Add Player");
+                            ((PlayersFragment) currentPage).addItem();
+                            break;
+                        }
+                    }
+                }
+            }
+        });
     }
 
     public static void SetupFragmentManager(FragmentManager fragmentManager, ViewPager viewPager) {
@@ -120,12 +153,5 @@ public class MainActivity extends AppCompatActivity {
     public static Uri getUriForResource(int resourceId) {
         return Uri.parse("android.resource://" + R.class.getPackage().getName() + "/" + resourceId);
     }
-
-    // public void toggleButtonVisibility(boolean show) {
-    //     if (show) {
-    //         btnAdd.setVisibility(View.VISIBLE);
-    //     }
-    //     else btnAdd.setVisibility(View.GONE);
-    // }
 
 }

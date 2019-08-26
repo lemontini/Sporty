@@ -26,7 +26,7 @@ public class AddLocationActivity extends AppCompatActivity {
 
     // constants
     private static final String TAG = "AddLocationActivity";
-    static final int IMAGE_REQUEST_CODE = 101;
+    static final int IMAGE_REQUEST_CODE = 201;
 
     // vars
     private EditText name, address, maxCourts;

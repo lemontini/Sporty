@@ -43,7 +43,7 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
     private LocationsViewModel mViewModel;
     private LocationsAdapter locationsAdapter;
     View v;
-    Button btnAdd;
+    // Button btnAdd;
 
     // instance
     public static LocationsFragment newInstance() {
@@ -66,14 +66,14 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
         recyclerView.setAdapter(locationsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
 
-        btnAdd = getActivity().findViewById(R.id.buttonAdd);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), AddLocationActivity.class);
-                startActivityForResult(intent, LOCATION_ADD);
-            }
-        });
+        // btnAdd = getActivity().findViewById(R.id.buttonAdd);
+        // btnAdd.setOnClickListener(new View.OnClickListener() {
+        //     @Override
+        //     public void onClick(View v) {
+        //         Intent intent = new Intent(v.getContext().getApplicationContext(), AddLocationActivity.class);
+        //         startActivityForResult(intent, LOCATION_ADD);
+        //     }
+        // });
     }
 
     @Override
@@ -137,14 +137,9 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
         }
     }
 
-    // @Override
-    // public void setMenuVisibility(final boolean visible) {
-    //     super.setMenuVisibility(visible);
-    //     Log.d(TAG, "setMenuVisibility: VISIBLE");
-    //     Fragment myFragment = getActivity().getFragmentManager().findFragmentByTag("Locations");
-    //     if (myFragment != null && myFragment.isVisible()) {
-    //         Log.d(TAG, "setMenuVisibility: VISIBLE");
-    //     }
-    // }
+    public void addItem() {
+        Intent intent = new Intent(v.getContext().getApplicationContext(), AddLocationActivity.class);
+        startActivityForResult(intent, LOCATION_ADD);
+    }
 
 }
