@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,13 +27,12 @@ public class MainActivity extends AppCompatActivity {
 
     // constants
     private static final String TAG = "MainActivity";
-    public final int LOCATION_ADD = 01;
 
     //vars
     BottomNavigationView navMain;
     ViewPager viewPager;
     Toolbar toolbar;
-    Button btnAdd;
+    private ImageButton btnAdd;
     int currentSelectedTab = 0;
 
     private TextView mTextMessage;
@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
 
         navMain = findViewById(R.id.nav_view); // init Navigation Bar
-        // mTextMessage = findViewById(R.id.message);
         navMain.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener); // set Listener for Navigation Items
 
         viewPager = findViewById(R.id.container); // init Viewpager

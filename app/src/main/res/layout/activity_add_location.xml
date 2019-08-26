@@ -15,16 +15,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <Button
+        <ImageButton
             android:id="@+id/buttonSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:hint="@string/save_hint"
+            android:onClick="btnSave_Click"
+            android:src="@android:drawable/ic_menu_save"
             android:text="@string/save"
             tools:layout_editor_absoluteX="322dp"
-            tools:layout_editor_absoluteY="0dp"
-            android:hint="@string/save_hint"
-            android:onClick="btnSave_Click" />
+            tools:layout_editor_absoluteY="0dp" />
 
     </android.support.v7.widget.Toolbar>
 

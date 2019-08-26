@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ public class AddLocationActivity extends AppCompatActivity {
 
     // vars
     private EditText name, address, maxCourts;
-    private Button btnSave;
+    private ImageButton btnSave;
     private ImageView logo;
     private Location cLocation;
     private Toolbar toolbar;

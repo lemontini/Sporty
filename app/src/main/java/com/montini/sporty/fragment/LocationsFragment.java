@@ -3,7 +3,6 @@ package com.montini.sporty.fragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -11,26 +10,21 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.montini.sporty.AddLocationActivity;
-import com.montini.sporty.MainActivity;
 import com.montini.sporty.R;
 import com.montini.sporty.adapter.LocationsAdapter;
 import com.montini.sporty.model.Location;
 import com.montini.sporty.viewmodel.LocationsViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.montini.sporty.MainActivity.getUriForResource;
 
 public class LocationsFragment extends Fragment implements LocationsAdapter.OnLocationListener {
 
@@ -43,7 +37,6 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
     private LocationsViewModel mViewModel;
     private LocationsAdapter locationsAdapter;
     View v;
-    // Button btnAdd;
 
     // instance
     public static LocationsFragment newInstance() {
@@ -138,7 +131,7 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
     }
 
     public void addItem() {
-        Intent intent = new Intent(v.getContext().getApplicationContext(), AddLocationActivity.class);
+        Intent intent = new Intent(v.getContext(), AddLocationActivity.class);
         startActivityForResult(intent, LOCATION_ADD);
     }
 

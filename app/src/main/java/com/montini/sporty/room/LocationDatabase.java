@@ -12,16 +12,18 @@ import android.support.annotation.NonNull;
 
 import com.montini.sporty.R;
 import com.montini.sporty.model.Location;
+import com.montini.sporty.model.Player;
 
 import static com.montini.sporty.MainActivity.getUriForResource;
 
-@Database(entities = {Location.class}, version = 1, exportSchema = false)
+@Database(entities = {Location.class, Player.class}, version = 1, exportSchema = false)
 @TypeConverters({UriTypeConverter.class})
 public abstract class LocationDatabase extends RoomDatabase {
 
     private static LocationDatabase instance;
 
     public abstract LocationDao locationDao();
+    public abstract PlayerDao playerDao();
 
     public static synchronized LocationDatabase getInstance(Context context) {
         if (instance == null) {

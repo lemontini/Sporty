@@ -16,11 +16,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <Button
+        <ImageButton
             android:id="@+id/buttonAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:src="@android:drawable/ic_input_add"
             android:text="@string/add"
             tools:layout_editor_absoluteX="322dp"
             tools:layout_editor_absoluteY="0dp" />

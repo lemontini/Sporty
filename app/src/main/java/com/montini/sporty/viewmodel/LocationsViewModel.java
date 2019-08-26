@@ -5,31 +5,31 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import com.montini.sporty.model.Location;
-import com.montini.sporty.repository.LocationsRepo;
+import com.montini.sporty.repository.DataRepo;
 
 import java.util.List;
 
 public class LocationsViewModel extends AndroidViewModel {
 
     private LiveData<List<Location>> mLocations;
-    private LocationsRepo mRepo;
+    private DataRepo mRepo;
 
     public LocationsViewModel(@NonNull Application application) {
         super(application);
-        mRepo = new LocationsRepo(application);
+        mRepo = new DataRepo(application);
         mLocations = mRepo.getAllLocations();
     }
 
     public void insert(Location location) {
-        mRepo.insert(location);
+        mRepo.insertLocation(location);
     }
 
     public void update(Location location) {
-        mRepo.update(location);
+        mRepo.updateLocation(location);
     }
 
     public void delete(Location location) {
-        mRepo.delete(location);
+        mRepo.deleteLocation(location);
     }
 
     public void deleteAllLocations() {
