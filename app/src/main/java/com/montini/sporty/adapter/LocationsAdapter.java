@@ -8,12 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.montini.sporty.R;
-import com.montini.sporty.fragment.LocationsFragment;
 import com.montini.sporty.model.Location;
 import com.squareup.picasso.Picasso;
 
@@ -40,7 +37,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.inner_layout, viewGroup, false);
+                .inflate(R.layout.location_item, viewGroup, false);
         return new ViewHolder(view, onLocationListener);
     }
 
@@ -75,9 +72,9 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
         public ViewHolder(@NonNull View itemView, OnLocationListener onLocationListener) {
             super(itemView);
 
-            this.aLogo = itemView.findViewById(R.id.vLogo);
-            this.aName = itemView.findViewById(R.id.vName);
-            this.aAddress = itemView.findViewById(R.id.vAddress);
+            this.aLogo = itemView.findViewById(R.id.vLocationLogo);
+            this.aName = itemView.findViewById(R.id.vLocationName);
+            this.aAddress = itemView.findViewById(R.id.vLocationAddress);
             this.onLocationListener = onLocationListener;
 
             itemView.setOnClickListener(this);

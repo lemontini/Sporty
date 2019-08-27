@@ -21,6 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:layout_marginEnd="1sp"
+            android:layout_marginRight="1sp"
             android:src="@android:drawable/ic_input_add"
             android:text="@string/add"
             tools:layout_editor_absoluteX="322dp"

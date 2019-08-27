@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.montini.sporty.AddLocationActivity;
+import com.montini.sporty.MainActivity;
 import com.montini.sporty.R;
 import com.montini.sporty.adapter.LocationsAdapter;
 import com.montini.sporty.model.Location;
@@ -39,9 +41,7 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
     View v;
 
     // instance
-    public static LocationsFragment newInstance() {
-        return new LocationsFragment();
-    }
+    public static LocationsFragment newInstance() { return new LocationsFragment(); }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -54,7 +54,7 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
 
     private void initLocationsView() {
         Log.d(TAG, "initLocationsView: init");
-        RecyclerView recyclerView = v.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = v.findViewById(R.id.location_view);
         locationsAdapter = new LocationsAdapter(v.getContext(), this);
         recyclerView.setAdapter(locationsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
@@ -75,7 +75,7 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
         mViewModel = ViewModelProviders.of(this).get(LocationsViewModel.class);
 
         // Use the ViewModel
-        mViewModel.getAllLocations().observe(this, new Observer<List<Location>>() {
+        mViewModel.getAll().observe(this, new Observer<List<Location>>() {
             @Override
             public void onChanged(@Nullable List<Location> locations) {
                 locationsAdapter.setLocations(locations);
@@ -134,5 +134,4 @@ public class LocationsFragment extends Fragment implements LocationsAdapter.OnLo
         Intent intent = new Intent(v.getContext(), AddLocationActivity.class);
         startActivityForResult(intent, LOCATION_ADD);
     }
-
 }
