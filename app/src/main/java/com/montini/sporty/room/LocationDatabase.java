@@ -45,9 +45,11 @@ public abstract class LocationDatabase extends RoomDatabase {
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private LocationDao locationDao;
+        private PlayerDao playerDao;
 
         private PopulateDbAsyncTask(LocationDatabase db) {
             locationDao = db.locationDao();
+            playerDao = db.playerDao();
         }
 
         @Override
@@ -56,6 +58,7 @@ public abstract class LocationDatabase extends RoomDatabase {
             locationDao.insert(new Location("Delfi Sporto Centras", "Ozo g. 14C, Vilnius", 8, getUriForResource(R.drawable.logo_delfi_sporto_centras)));
             locationDao.insert(new Location("Zambia", "Africa", 1, Uri.parse("https://d2lo9qrcc42lm4.cloudfront.net/Images/News/_contentLarge/Main-girls-out-of-school.jpg?mtime=20170426205135")));
             locationDao.insert(new Location("a", "b", 1, Uri.parse("file:///storage/emulated/0/Pictures/Instagram/IMG_20190630_210003_297.jpg")));
+            playerDao.insert(new Player("montini", Uri.parse("file:///storage/emulated/0/Pictures/Messenger/received_10156738141132792.jpeg")));
             return null;
         }
     }

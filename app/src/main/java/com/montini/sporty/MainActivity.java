@@ -1,8 +1,12 @@
 package com.montini.sporty;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -65,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // requestPermission();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -74,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         //Here you get actionbar features if you
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+
 
         navMain = findViewById(R.id.nav_view); // init Navigation Bar
         navMain.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener); // set Listener for Navigation Items
@@ -151,6 +157,14 @@ public class MainActivity extends AppCompatActivity {
 
     public static Uri getUriForResource(int resourceId) {
         return Uri.parse("android.resource://" + R.class.getPackage().getName() + "/" + resourceId);
+    }
+
+    private void requestPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            Toast.makeText(this, "Write External Storage permission allows us to save files. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1100);
+        }
     }
 
 }

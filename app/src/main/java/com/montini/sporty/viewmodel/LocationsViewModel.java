@@ -32,11 +32,11 @@ public class LocationsViewModel extends AndroidViewModel {
         mRepo.deleteLocation(location);
     }
 
-    public void deleteAllLocations() {
+    public void deleteAll() {
         mRepo.deleteAllLocations();
     }
 
-    public LiveData<List<Location>> getAllLocations() {
+    public LiveData<List<Location>> getAll() {
         return mRepo.getAllLocations();
     }
 }

@@ -5,9 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".fragment.PlayersFragment">
 
-    <TextView
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:text="@string/title_players" />-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/player_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/title_players" />
+        android:layout_height="wrap_content"
+        android:divider="#FFA000"
+        android:dividerHeight="1px"
+        android:listSelector="#1DFFA000"
+        android:scrollbars="vertical" />
 
 </FrameLayout>

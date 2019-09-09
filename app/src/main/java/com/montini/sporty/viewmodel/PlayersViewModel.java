@@ -27,8 +27,8 @@ public class PlayersViewModel extends AndroidViewModel {
 
     public void delete(Player player) { mRepo.deletePlayer(player); }
 
-    public void deleteAllPlayers() { mRepo.deleteAllPlayers(); }
+    public void deleteAll() { mRepo.deleteAllPlayers(); }
 
-    public LiveData<List<Player>> getAllPlayers() { return mRepo.getAllPlayers(); }
+    public LiveData<List<Player>> getAll() { return mRepo.getAllPlayers(); }
     
 }

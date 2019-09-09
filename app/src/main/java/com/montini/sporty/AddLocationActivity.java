@@ -9,51 +9,42 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.montini.sporty.model.Location;
+import com.montini.sporty.util.ChangeWatcher;
 import com.squareup.picasso.Picasso;
 
 public class AddLocationActivity extends AppCompatActivity {
 
     // constants
     private static final String TAG = "AddLocationActivity";
-    static final int IMAGE_REQUEST_CODE = 201;
+    static final int IMAGE_REQUEST_CODE = 0201;
 
     // vars
     private EditText name, address, maxCourts;
     private ImageButton btnSave;
     private ImageView logo;
     private Location cLocation;
-    private Toolbar toolbar;
     private int position;
-
-    private boolean isContentChanged = false;
+    private ChangeWatcher changeWatcher = new ChangeWatcher();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         logo = findViewById(R.id.choose_logo_Image);
         name = findViewById(R.id.editText1);
-        name.addTextChangedListener(textWatcher);
+        name.addTextChangedListener(changeWatcher.getInstance());
         address = findViewById(R.id.editText2);
-        address.addTextChangedListener(textWatcher);
+        address.addTextChangedListener(changeWatcher.getInstance());
         maxCourts = findViewById(R.id.editText3);
-        maxCourts.addTextChangedListener(textWatcher);
+        maxCourts.addTextChangedListener(changeWatcher.getInstance());
         btnSave = findViewById(R.id.buttonSave);
 
         Intent intent = getIntent();
@@ -71,24 +62,9 @@ public class AddLocationActivity extends AppCompatActivity {
         } else cLocation = new Location();
     }
 
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            isContentChanged = true;
-        }
-    };
-
     public void btnSave_Click(View v) {
         Intent returnIntent = new Intent();
-        if (isContentChanged) {
+        if (changeWatcher.isContentChanged()) {
 
             cLocation.setName(String.valueOf(name.getText()));
             cLocation.setAddress(String.valueOf(address.getText()));
@@ -108,7 +84,7 @@ public class AddLocationActivity extends AppCompatActivity {
         requestPermission();
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         // Sets the type as image/*. This ensures only components of type image are selected
-        intent.setType("image/*");
+        // intent.setType("image/*");
         // We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
         String[] mimeTypes = {"image/jpeg", "image/png"};
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
@@ -129,7 +105,7 @@ public class AddLocationActivity extends AppCompatActivity {
             // logo.setImageURI(selectedImage);
             // // writeUsingOutputStream(selectedImage.toString());
             Picasso.with(this).load(picturePath).resize(480, 480).centerInside().into(logo);
-            isContentChanged = true;
+            changeWatcher.setContentChanged();
         }
     }
 
