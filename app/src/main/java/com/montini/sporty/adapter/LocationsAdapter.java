@@ -1,14 +1,15 @@
 package com.montini.sporty.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.montini.sporty.R;
 import com.montini.sporty.model.Location;
@@ -46,7 +47,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
         Log.d(TAG, "onBindViewHolder: called. Picture: " + locations.get(position).getLogo());
         Location currentLocation = locations.get(position);
 
-        Picasso.with(context).load(currentLocation.getLogo()).resize(480, 480).centerInside().into(viewHolder.aLogo);
+        Picasso.get().load(currentLocation.getLogo()).resize(480, 480).centerInside().into(viewHolder.aLogo);
         viewHolder.aName.setText(currentLocation.getName());
         viewHolder.aAddress.setText(currentLocation.getAddress());
 

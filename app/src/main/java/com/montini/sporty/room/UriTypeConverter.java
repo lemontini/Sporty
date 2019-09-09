@@ -1,7 +1,8 @@
 package com.montini.sporty.room;
 
-import android.arch.persistence.room.TypeConverter;
 import android.net.Uri;
+
+import androidx.room.TypeConverter;
 
 public class UriTypeConverter {
     @TypeConverter

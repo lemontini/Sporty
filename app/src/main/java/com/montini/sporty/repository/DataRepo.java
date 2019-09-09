@@ -1,22 +1,17 @@
 package com.montini.sporty.repository;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.net.Uri;
 import android.os.AsyncTask;
 
-import com.montini.sporty.R;
+import androidx.lifecycle.LiveData;
+
 import com.montini.sporty.model.Location;
 import com.montini.sporty.model.Player;
 import com.montini.sporty.room.LocationDao;
 import com.montini.sporty.room.LocationDatabase;
 import com.montini.sporty.room.PlayerDao;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.montini.sporty.MainActivity.getUriForResource;
 
 public class DataRepo {
 

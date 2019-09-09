@@ -6,9 +6,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,6 +18,9 @@ import android.widget.Toast;
 import com.montini.sporty.model.Location;
 import com.montini.sporty.util.ChangeWatcher;
 import com.squareup.picasso.Picasso;
+
+import static com.montini.sporty.util.WorkFlow.getPathFromContentURI;
+import static com.montini.sporty.util.WorkFlow.requestPermission;
 
 public class AddLocationActivity extends AppCompatActivity {
 
@@ -53,7 +56,7 @@ public class AddLocationActivity extends AppCompatActivity {
 
         if (cLocation != null) {
             // Picasso.with(this).setLoggingEnabled(true);
-            Picasso.with(this).load(cLocation.getLogo()).error(R.drawable.placeholder_camera).resize(480, 480).centerInside().into(logo);
+            Picasso.get().load(cLocation.getLogo()).error(R.drawable.placeholder_camera).resize(480, 480).centerInside().into(logo);
             // Log.d(TAG, "onCreate: path of image: " + cLocation.getLogo());
             name.setText(cLocation.getName());
             address.setText(cLocation.getAddress());
@@ -81,7 +84,7 @@ public class AddLocationActivity extends AppCompatActivity {
 
     public void logo_Click(View v) {
         //Create an Intent with action as ACTION_PICK
-        requestPermission();
+        requestPermission(this);
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         // Sets the type as image/*. This ensures only components of type image are selected
         // intent.setType("image/*");
@@ -104,7 +107,7 @@ public class AddLocationActivity extends AppCompatActivity {
             cLocation.setLogo(Uri.parse(picturePath));
             // logo.setImageURI(selectedImage);
             // // writeUsingOutputStream(selectedImage.toString());
-            Picasso.with(this).load(picturePath).resize(480, 480).centerInside().into(logo);
+            Picasso.get().load(picturePath).resize(480, 480).centerInside().into(logo);
             changeWatcher.setContentChanged();
         }
     }
@@ -113,25 +116,17 @@ public class AddLocationActivity extends AppCompatActivity {
     //         FileWriter cache = new FileWriter("cache/" + logoFileName);
     // }
 
-    private void requestPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            Toast.makeText(this, "Write External Storage permission allows us to save files. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
-        }
-    }
-
-    public String getPathFromContentURI(Uri contentUri) {
-        String res = null;
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor.moveToFirst()) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            res = cursor.getString(column_index);
-        }
-        cursor.close();
-        return res;
-    }
+    // public String getPathFromContentURI(Uri contentUri) {
+    //     String res = null;
+    //     String[] proj = {MediaStore.Images.Media.DATA};
+    //     Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+    //     if (cursor.moveToFirst()) {
+    //         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+    //         res = cursor.getString(column_index);
+    //     }
+    //     cursor.close();
+    //     return res;
+    // }
 
     // public void writeUsingOutputStream(String data) {
     //     OutputStream os = null;

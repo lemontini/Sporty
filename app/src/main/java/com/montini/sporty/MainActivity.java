@@ -1,27 +1,27 @@
 package com.montini.sporty;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
+
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.montini.sporty.adapter.FragmentAdapter;
 import com.montini.sporty.fragment.EventsFragment;
 import com.montini.sporty.fragment.LocationsFragment;
@@ -32,7 +32,14 @@ public class MainActivity extends AppCompatActivity {
     // constants
     private static final String TAG = "MainActivity";
 
-    //vars
+    // Firebase authorization database
+    private FirebaseAuth mAuth;
+
+    // Facebook callback manager
+    private CallbackManager mCallbackManager;
+
+
+    // other vars
     BottomNavigationView navMain;
     ViewPager viewPager;
     Toolbar toolbar;
@@ -72,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
         // requestPermission();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance(); // get Firebase instance
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getTitle());
@@ -120,6 +129,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
+    }
+
     public static void SetupFragmentManager(FragmentManager fragmentManager, ViewPager viewPager) {
         FragmentAdapter Adapter = new FragmentAdapter(fragmentManager);
 
@@ -131,10 +148,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class PageChange implements ViewPager.OnPageChangeListener {
+
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         }
-
         @Override
         public void onPageSelected(int position) {
             switch (position) {
@@ -153,8 +170,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onPageScrollStateChanged(int state) {
         }
-    }
 
+    }
     public static Uri getUriForResource(int resourceId) {
         return Uri.parse("android.resource://" + R.class.getPackage().getName() + "/" + resourceId);
     }
@@ -165,6 +182,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1100);
         }
+    }
+
+    private void updateUI(FirebaseUser currentUser) {
+
     }
 
 }
